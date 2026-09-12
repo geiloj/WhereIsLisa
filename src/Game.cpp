@@ -6,11 +6,12 @@
 
 namespace Game {
     int Game::run() {
-        int count = 0;
-        m_knight.setScale({5,5});
+        int frame = 0;
+        m_knight.setScale({7,7});
         while ( window.isOpen() )
         {
-            count++;
+            frame++;
+            m_knight.input();
             while ( const std::optional event = window.pollEvent() )
             {
                 if ( event->is<sf::Event::Closed>() ) {
@@ -19,13 +20,9 @@ namespace Game {
                 }
             }
 
-
             window.clear();
-            if (count%10 == 0) {
-                m_knight.nextFrame();
-            }
+            m_knight.nextFrame(frame);
             window.draw(m_knight.getSprite());
-
             window.display();
         }
         return -1;
