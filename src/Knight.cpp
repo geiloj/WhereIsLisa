@@ -17,6 +17,7 @@ void Knight::input() {
             sprite.move({static_cast<float>(-frameWidth*5), 0});
             std::cout << "eins\n";
         }
+
         sprite.setScale({scaleX, sprite.getScale().y});
         sprite.move({SPEED, 0});
     }
