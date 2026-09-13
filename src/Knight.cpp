@@ -14,29 +14,29 @@ void Knight::input() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
         changeState(RUNNING);
         if (sprite.getScale().x < 0) {
-            sprite.move({static_cast<float>(-frameWidth*5), 0});
-            std::cout << "eins\n";
+            sprite.move({static_cast<float>(-m_frameWidth*5), 0});
+            print("Sprite facing right\n");
         }
 
         sprite.setScale({scaleX, sprite.getScale().y});
-        sprite.move({SPEED, 0});
+        sprite.move({m_SPEED, 0});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
         changeState(RUNNING);
         if (sprite.getScale().x > 0) {
-            std::cout << "zwei\n";
-            sprite.move({static_cast<float>(frameWidth*5), 0});
+            print("Sprite facing left\n");
+            sprite.move({static_cast<float>(m_frameWidth*5), 0});
         }
         sprite.setScale({-scaleX, sprite.getScale().y});
-        sprite.move({-SPEED, 0});
+        sprite.move({-m_SPEED, 0});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
         changeState(RUNNING);
-        sprite.move({0, -SPEED});
+        sprite.move({0, -m_SPEED});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
         changeState(RUNNING);
-        sprite.move({0, SPEED});
+        sprite.move({0, m_SPEED});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) {
         changeState(RUNNING);

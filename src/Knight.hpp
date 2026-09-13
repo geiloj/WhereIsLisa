@@ -39,14 +39,20 @@ private:
     states state = IDLE;
     std::unordered_map<states, std::unique_ptr<sf::Texture>> textures;
     sf::Sprite sprite;
-    const int frameWidth = 15;
-    const int frameHeight = 19;
-    const int xOffset = 41;
-    const int yOffset = 38;
-    float SPEED = 5;
-    int currentFrame = 0;
-    int totalFrames = 6;
-    int animationSpeed = 10;
+    int m_frameWidth = 15;
+    int m_frameHeight = 19;
+    const int m_xOffset = 41;
+    const int m_yOffset = 38;
+    float m_SPEED = 5;
+    int m_currentFrame = 0;
+    int m_totalFrames = 6;
+    int m_animationSpeed = 10;
+    void changeSpriteInfo(const int animationSpeed, const int frameWidth, const int frameHeight, const int totalFrames) {
+        m_animationSpeed = animationSpeed;
+        m_frameWidth = frameWidth;
+        m_frameHeight = frameHeight;
+        m_totalFrames = totalFrames;
+    }
 
 public:
     void input();
@@ -65,16 +71,16 @@ public:
     }
 
     void setFrame(const int frameIndex) {
-        if (frameIndex >= 0 && frameIndex < totalFrames) {
-            currentFrame = frameIndex;
-            sprite.setTextureRect(sf::IntRect({currentFrame * 100 + xOffset, yOffset}, {frameWidth, frameHeight}));
+        if (frameIndex >= 0 && frameIndex < m_totalFrames) {
+            m_currentFrame = frameIndex;
+            sprite.setTextureRect(sf::IntRect({m_currentFrame * 100 + m_xOffset, m_yOffset}, {m_frameWidth, m_frameHeight}));
         }
     }
 
 
     void nextFrame(const int frame) {
-        if (frame%(60/animationSpeed) == 0) {
-            setFrame((currentFrame + 1) % totalFrames);
+        if (frame%(60/m_animationSpeed) == 0) {
+            setFrame((m_currentFrame + 1) % m_totalFrames);
         }
     }
 
@@ -89,25 +95,27 @@ public:
         sprite.setTexture(*textures[newState]);
         switch (newState) {
             case IDLE:
-            case ATTACK1:
-            case ATTACK2:
-                animationSpeed = 10;
-                totalFrames = 6;
+                changeSpriteInfo(5, 15, 19, 6);
                 break;
+            case ATTACK1:
+                changeSpriteInfo(10, 30, 24, 6);
+                break;
+            case ATTACK2:
+                changeSpriteInfo(10, 15, 19, 6);
             case DEATH:
-                animationSpeed = 5;
+                changeSpriteInfo(3, 24, 19, 4);
+                break;
             case DAMAGE:
-                animationSpeed = 7;
-                totalFrames = 4;
+                changeSpriteInfo(7, 15, 19, 4);
                 break;
             case RUNNING:
-                totalFrames = 8;
+                changeSpriteInfo(5, 15, 19, 8);
                 break;
             case ATTACK3:
-                totalFrames = 9;
+                changeSpriteInfo(5, 15, 19, 9);
         }
-        if (currentFrame >= totalFrames) {
-            currentFrame = 0;
+        if (m_currentFrame >= m_totalFrames) {
+            m_currentFrame = m_totalFrames;
         }
     }
 };
